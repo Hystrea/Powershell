@@ -8,9 +8,9 @@ $Callback = { Param($Sender, $Cert, $Chain, $Errors) return $true }
 $sslstream = New-Object -TypeName System.net.Security.SslStream -ArgumentList @($TcpStream, $True, $callback)
 $sslStream.authenticateAsClient($ip)
 $Certificate = New-Object -TypeName system.security.cryptography.x509certificates.x509certificate2($sslStream.RemoteCertificate)
-$SslStream.Dispose()
+$SslStream.Dispose()#test
 $TcpClient.dispose()
-Return $Certificate
+Return $Certificate #test
 }
 
 
