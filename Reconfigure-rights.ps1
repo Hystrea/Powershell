@@ -1,6 +1,6 @@
 ﻿#Made by Nick
 
-#Download eerst NTFSSecurity module voor POSH en installeer deze in de paden die het volgende script returned:
+#Download eerst NTFSSecurity module voor POSH en installeer deze
 #https://gallery.technet.microsoft.com/scriptcenter/1abd77a5-9c0b-4a2b-acef-90dbb2b84e85
 #run hierna pas het script
 
