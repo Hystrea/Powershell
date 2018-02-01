@@ -9,7 +9,7 @@ $sslstream = New-Object -TypeName System.net.Security.SslStream -ArgumentList @(
 $sslStream.authenticateAsClient($ip)
 $Certificate = New-Object -TypeName system.security.cryptography.x509certificates.x509certificate2($sslStream.RemoteCertificate)
 $SslStream.Dispose()#test
-$TcpClient.dispose()
+$TcpClient.dispose()#test
 Return $Certificate #test
 }
 
