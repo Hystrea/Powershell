@@ -9,11 +9,11 @@ Import-Module NTFSSecurity
 Import-Module ActiveDirectory
 
 $Groups = Get-ADGroup -Filter *
-$folderlist = get-childitem \\server\share | Where-object { $_.PSIsContainer }#Pas sharenaam aan
+$folderlist = get-childitem \\server\share | Where-object { $_.PSIsContainer }#Pas sharenaam aan #To-do Variabele aanmaken
 
 Foreach($folder in $folderlist){
-NEW-ADGroup –name “ACL_$($folder.name)_RW” -GroupCategory Security –Groupscope Global –path “OU=ACL,OU=COMPANY,DC=COMPANY,DC=local” #Pas OU en DC aan naar gegevens klant
-NEW-ADGroup –name “ACL_$($folder.name)_R” -GroupCategory Security –Groupscope Global –path “OU=ACL,OU=COMPANY,DC=COMPANY,DC=local” #Pas OU en DC aan naar gegevens klant
+NEW-ADGroup –name “ACL_$($folder.name)_RW” -GroupCategory Security –Groupscope Global –path “OU=ACL,OU=COMPANY,DC=COMPANY,DC=local” #Pas OU en DC aan naar gegevens klant #To-do Variabele aanmaken
+NEW-ADGroup –name “ACL_$($folder.name)_R” -GroupCategory Security –Groupscope Global –path “OU=ACL,OU=COMPANY,DC=COMPANY,DC=local” #Pas OU en DC aan naar gegevens klant #To-do Variabele aanmaken
 }
 
 Foreach($folder in $folderlist){
