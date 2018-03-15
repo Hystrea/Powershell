@@ -12,6 +12,6 @@
 
 $welkeuser = Read-Host "Wat is het emailadres van de gebruiker"
 $gebruiker = Read-Host "Wie moet de rechten krijgen? (emailadres)"
-$agenda = Read-Host "Calendar, Agenda of Kalender"
+$agenda = Read-Host "Calendar, Agenda of Kalender" #To-Do Automatisch foldertype selecteren
 
 Add-MailboxFolderPermission -identity "$($welkeuser):\$($agenda)" -user $gebruiker -AccessRights PublishingEditor
