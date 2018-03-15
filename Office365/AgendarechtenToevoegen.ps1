@@ -9,9 +9,14 @@
         $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $Credential -Authentication Basic -AllowRedirection 
         Import-PSSession $Session -AllowClobber 3> $null
 
+$WieMoetInDeAgenda = Read-Host "Wie moet er toegang krijgen?"
+$Welkeuser = Read-Host "Welke user is de agenda van?"
+$user = Get-Mailbox -identity $welkeuser -RecipientTypeDetails UserMailBox 
+$useralias = $user.PrimarySMTPAddress
+$folders = Get-MailboxFolderStatistics -identity $useralias | Where-Object {$_.FolderType -eq "Calendar"}
 
-$welkeuser = Read-Host "Wat is het emailadres van de gebruiker"
-$gebruiker = Read-Host "Wie moet de rechten krijgen? (emailadres)"
-$agenda = Read-Host "Calendar, Agenda of Kalender" #To-Do Automatisch foldertype selecteren
-
-Add-MailboxFolderPermission -identity "$($welkeuser):\$($agenda)" -user $gebruiker -AccessRights PublishingEditor
+foreach($folder in $folders){
+$foldername = $folder.Name
+write-host "Trying to set permissions for $wiemoetindeagenda to $($useralias):\$($foldername)" -ForegroundColor Green
+Add-MailboxFolderPermission -Identity "$($useralias):\$($foldername)" -User $WieMoetInDeAgenda -AccessRights PublishingEditor
+}

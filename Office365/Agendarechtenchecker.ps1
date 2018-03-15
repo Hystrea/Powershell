@@ -14,9 +14,9 @@ $Welkeuser = Read-Host "Welke user is de agenda van?"
 $user = Get-Mailbox -identity $welkeuser -RecipientTypeDetails UserMailBox 
 $useralias = $user.PrimarySMTPAddress
 $folders = Get-MailboxFolderStatistics -identity $useralias | Where-Object {$_.FolderType -eq "Calendar"}
-$Accessrights = Read-Host "Welke Accessrights heeft de user?"
+
 foreach($folder in $folders){
 $foldername = $folder.Name
-write-host "Trying to remove permissions for $wiemoetindeagenda to $($useralias):\$($foldername)" -ForegroundColor Green
-Remove-MailboxFolderPermission -Identity "$($useralias):\$($foldername)" -User $WieMoetInDeAgenda -AccessRights $Accessrights
+write-host "Trying to get permissions for $wiemoetindeagenda to $($useralias):\$($foldername)" -ForegroundColor Green
+Get-MailboxFolderPermission -Identity "$($useralias):\$($foldername)" -User $WieMoetInDeAgenda 
 }
