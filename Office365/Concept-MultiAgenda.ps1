@@ -10,17 +10,18 @@
         Import-PSSession $Session -AllowClobber 3> $null
 
 
-$WieMoetInDeAgenda = Read-Host "Wie moet er toegang krijgen?"
+[array]$WieMoetInDeAgenda = (Read-Host "Wie moet er toegang krijgen? (opslitsen met ,)").split(",") | %{$_.trim()}
      
      [array]$accounts = (Read-Host "welke e-mailadressen (opsplitsen met ,)").split(“,”) | %{$_.trim()} 
      
      
-     foreach ($account in $accounts){
-           $accountalias = $account.PrimarySMTPAddress
-           $folders = Get-MailboxFolderStatistics -identity $accountalias | Where-Object {$_.FolderType -eq "Calendar"}
+     foreach ($accountalias in $accounts){
+                   $folders = Get-MailboxFolderStatistics -identity $accountalias | Where-Object {$_.FolderType -eq "Calendar"}
+         foreach ($gebruiker in $WieMoetInDeAgenda){
                    foreach($folder in $folders) {
                           $foldername = $folder.Name
-                          write-host "Trying to set permissions for $wiemoetindeagenda to $($accountalias):\$($foldername)" -ForegroundColor Green
-                          Add-MailboxFolderPermission -Identity "$($accountalias):\$($foldername)" -User $WieMoetInDeAgenda -AccessRights PublishingEditor
+                          write-host "Trying to set permissions for $gebruiker to $($accountalias):\$($foldername)" -ForegroundColor Green
+                          Add-MailboxFolderPermission -Identity "$($accountalias):\$($foldername)" -User $Gebruiker -AccessRights PublishingEditor
+                                                 }
                                                  }
                                                  }
