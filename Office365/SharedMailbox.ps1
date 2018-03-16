@@ -9,6 +9,9 @@
         $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $Credential -Authentication Basic -AllowRedirection 
         Import-PSSession $Session -AllowClobber 3> $null
 
+[array]$accounts = (Read-Host "welke mailboxen moeten shared worden? (opsplitsen met ,)").split(“,”) | %{$_.trim()} 
 
-$welkeuser = read-host "Wat is het e-mailadres van de user?"
-Set-mailbox -identity $welkeuser -type shared
+foreach ($account in $accounts){
+write-host "Converting $account to a shared mailbox" -ForegroundColor Green
+Set-mailbox -identity $account -type shared
+}
