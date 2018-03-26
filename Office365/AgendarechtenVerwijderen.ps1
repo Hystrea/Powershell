@@ -9,14 +9,18 @@
         $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $Credential -Authentication Basic -AllowRedirection 
         Import-PSSession $Session -AllowClobber 3> $null
 
-$WieMoetInDeAgenda = Read-Host "Wie moet er toegang krijgen?"
-$Welkeuser = Read-Host "Welke user is de agenda van?"
-$user = Get-Mailbox -identity $welkeuser -RecipientTypeDetails UserMailBox 
-$useralias = $user.PrimarySMTPAddress
-$folders = Get-MailboxFolderStatistics -identity $useralias | Where-Object {$_.FolderType -eq "Calendar"}
-$Accessrights = Read-Host "Welke Accessrights heeft de user?"
-foreach($folder in $folders){
-$foldername = $folder.Name
-write-host "Trying to remove permissions for $wiemoetindeagenda to $($useralias):\$($foldername)" -ForegroundColor Green
-Remove-MailboxFolderPermission -Identity "$($useralias):\$($foldername)" -User $WieMoetInDeAgenda -AccessRights $Accessrights
-}
+[array]$WieMoetInDeAgenda = (Read-Host "Wie moet er toegang krijgen? (opslitsen met ,)").split(",") | %{$_.trim()}
+     
+     [array]$accounts = (Read-Host "welke e-mailadressen (opsplitsen met ,)").split(“,”) | %{$_.trim()} 
+     
+     
+     foreach ($accountalias in $accounts){
+                   $folders = Get-MailboxFolderStatistics -identity $accountalias | Where-Object {$_.FolderType -eq "Calendar"}
+         foreach ($gebruiker in $WieMoetInDeAgenda){
+                   foreach($folder in $folders) {
+                          $foldername = $folder.Name
+                          write-host "Trying to set permissions for $gebruiker to $($accountalias):\$($foldername)" -ForegroundColor Green
+                          Remove-MailboxFolderPermission -Identity "$($accountalias):\$($foldername)" -User $Gebruiker -AccessRights PublishingEditor
+                                                 }
+                                                 }
+                                                 }

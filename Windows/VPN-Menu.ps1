@@ -43,21 +43,23 @@ do
                 cls
                 'VPN Aanmaken'
                 $VPNName = Read-Host -Prompt 'VPN Name?'
-$VPNServerAddress = Read-host -Prompt 'what is the ServerAddress?'
-
-
- Add-VpnConnection -Name $VPNName -ServerAddress $VPNServerAddress -TunnelType SSTP -EncryptionLevel Optional -AuthenticationMethod CHAP, MSChapv2  -AllUserConnection -PassThru -verbose
+                $VPNServerAddress = Read-host -Prompt 'what is the ServerAddress?'
+                Write-Host "Trying to create $VPNName" -ForegroundColor Yellow
+                Add-VpnConnection -Name $VPNName -ServerAddress $VPNServerAddress -TunnelType SSTP -EncryptionLevel Optional -AuthenticationMethod CHAP, MSChapv2  -AllUserConnection -PassThru -verbose
            } '2' {
                 cls
                 'VPN Verwijderen'
                  $VPNRemoveName = Read-Host -Prompt 'Which VPN Connection do you want to remove?'
- Remove-VpnConnection -Name $VPNRemoveName -AllUserConnection -Verbose
+                 Write-Host "Trying to remove $VPNRemoveName" -ForegroundColor Yellow
+                 Remove-VpnConnection -Name $VPNRemoveName -AllUserConnection -Verbose
+                 
            } '3' {
                 cls
-                "Alle IP's op jouw apparaat"
+                Write-host "Alle IP's op jouw apparaat" -foregroundcolor Yellow
                 ipconfig /all
                 } '4' {
                 $doel = Read-Host -Prompt 'VPN Address?'
+                Write-host "Trying to get SSL certificate for $doel" -ForegroundColor "Yellow"
                 $certificate = chkcert $doel 443
                 $date = (Get-Date)
                 $cert = $certificate.notafter.ToShortDateString() 
@@ -70,6 +72,7 @@ $VPNServerAddress = Read-host -Prompt 'what is the ServerAddress?'
                 }  
                 } '5' {
                 $VPNNameVraag = Read-Host -Prompt 'Which VPN do you want to disable this for'
+                Write-Host "Trying to disable Remote gateway on $VPNNameVraag" -ForegroundColor Yellow
                 Get-VPNConnection | Set-VpnConnection $VPNNameVraag -SplitTunneling $True -verbose
                       
            }'q' {
