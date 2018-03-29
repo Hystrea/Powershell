@@ -17,6 +17,7 @@ foreach($File in $Fontdir)
 if ($Comparison.SideIndicator -eq '==' ) {
 
 Write-Host "bestaat al!"
+break
 }
 Else {    
    
