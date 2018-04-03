@@ -1,0 +1,1 @@
+﻿Get-MSOLUser -All | select displayname,userprincipalname,islicensed,{$_.Licenses.AccountSkuId}| Export-CSV c:\temp\userlist.csv -NoTypeInformation
