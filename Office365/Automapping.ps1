@@ -12,5 +12,5 @@
 $welke = Read-host 'Welke mailbox gaat het om'
 $wie = Read-host 'Wie moet er zonder automapping rechten krijgen?'
 
-Remove-Mailboxpermission -identity $welke -user $wie 
+Remove-Mailboxpermission -identity $welke -user $wie -AccessRights FullAccess
 Add-mailboxpermission -identity $welke -user $wie -AccessRights FullAccess -Automapping $False
