@@ -9,7 +9,7 @@
         $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $Credential -Authentication Basic -AllowRedirection 
         Import-PSSession $Session -AllowClobber 3> $null
 
-[array]$WieMoetInDeAgenda = (Read-Host "Wie moet er toegang krijgen? (opslitsen met ,)").split(",") | %{$_.trim()}
+[array]$WieMoetInDeAgenda = (Read-Host "Welke gebruikers moet er toegang ontzegd worden? (opslitsen met ,)").split(",") | %{$_.trim()}
      
      [array]$accounts = (Read-Host "welke e-mailadressen (opsplitsen met ,)").split(“,”) | %{$_.trim()} 
      
